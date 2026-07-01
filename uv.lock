@@ -353,6 +353,7 @@ dependencies = [
     { name = "pandas" },
     { name = "pillow" },
     { name = "pyyaml" },
+    { name = "torch" },
     { name = "ultralytics" },
 ]
 
@@ -363,6 +364,7 @@ requires-dist = [
     { name = "pandas" },
     { name = "pillow" },
     { name = "pyyaml" },
+    { name = "torch", specifier = ">=2.9" },
     { name = "ultralytics", specifier = ">=8.3" },
 ]
 
