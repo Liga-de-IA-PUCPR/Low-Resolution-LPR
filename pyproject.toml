@@ -6,10 +6,27 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "ultralytics>=8.3",
-    "torch>=2.9",
+    "torch==2.6.0",
+    "torchvision==0.21.0",
     "pillow",
     "numpy",
     "pandas",
     "matplotlib",
     "pyyaml",
 ]
+
+# Pinned to a CUDA 11.8 build: the training machine's NVIDIA driver only supports up to
+# CUDA 12.2 (max supported CUDA runtime, per driver version), which is too old for the
+# CUDA 13.0 wheels torch resolves to by default on PyPI — torch.cuda.is_available()
+# silently returns False in that case instead of erroring. cu118 is backward-compatible
+# with effectively any modern driver, so it's a safe default; torch==2.6.0 is the newest
+# release with both a cu118 build and Python 3.13 wheels. If a training machine has a
+# newer driver, this pin still works fine (just not the very latest torch features).
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu118" }]
+torchvision = [{ index = "pytorch-cu118" }]
+
+[[tool.uv.index]]
+name = "pytorch-cu118"
+url = "https://download.pytorch.org/whl/cu118"
+explicit = true
